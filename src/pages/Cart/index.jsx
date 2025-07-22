@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { FaArrowRight, FaCreditCard } from "react-icons/fa";
 
 const index = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
+    setLoading(true);
     const storedItems = localStorage.getItem("cart");
     if (storedItems) {
       const parsedItems = JSON.parse(storedItems);
@@ -19,9 +22,11 @@ const index = () => {
       );
       setTotal(totalValue);
     }
+    setLoading(false);
   }, []);
 
   const removeItem = (id) => {
+    setLoading(true);
     const updatedItems = cartItems.filter((item) => item.title !== id);
     setCartItems(updatedItems);
     localStorage.setItem("cart", JSON.stringify(updatedItems));
@@ -32,6 +37,7 @@ const index = () => {
       0
     );
     setTotal(totalValue);
+    setLoading(false);
   };
 
   return (
@@ -40,12 +46,14 @@ const index = () => {
         <h1 className="text-2xl font-semibold text-green-700 mb-2">
           Lista de Pedidos
         </h1>
-
         {cartItems === 0 ? (
           <p>Lista vazia!</p>
         ) : (
           cartItems.map((item) => (
-            <div key={item.id} className="flex border shadow rounded p-2 mb-2">
+            <div
+              key={item.title}
+              className="flex border shadow rounded p-2 mb-2"
+            >
               <div
                 className="flex-none rounded mr-2"
                 style={{
@@ -60,9 +68,9 @@ const index = () => {
                   <h2 className="font-semibold">{item.title}</h2>
                   <div className="flex justify-between w-ful">
                     <p>
-                      {item.qtd} x {item.price.toFixed(2).replace(".",",")}
+                      {item.qtd} x {item.price.toFixed(2).replace(".", ",")}
                     </p>
-                    <p>Total R$ {item.subtotal.toFixed(2).replace(".",",")}</p>
+                    <p>Total R$ {item.subtotal.toFixed(2).replace(".", ",")}</p>
                   </div>
                 </div>
                 <div>
@@ -82,15 +90,19 @@ const index = () => {
         <div className="flex items-center justify-between border rounded shadow p-2">
           <div className="flex items-center">
             <FaCreditCard className="mr-2 w-5 h-5" />
-            <p className="text-xl">R$ {total.toFixed(2).replace(".", ",")}</p>
+            {loading ? (
+              <p>Carregando...</p>
+            ) : (
+              <p className="text-xl">R$ {total.toFixed(2).replace(".", ",")}</p>
+            )}
           </div>
-          <button
-            type="button"
-            class="flex items-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
+          <Link
+            to="/checkout"
+            className="flex items-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
           >
             Pagamento R$ {total.toFixed(2).replace(".", ",")}
             <FaArrowRight className="ml-2" />
-          </button>
+          </Link>
         </div>
       </div>
     </main>

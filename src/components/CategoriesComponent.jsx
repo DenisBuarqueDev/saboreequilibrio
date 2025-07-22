@@ -93,7 +93,7 @@ const CategoriesComponent = () => {
   return (
     <section className="bg-white">
       <div className="py-2 px-4 mx-auto max-w-screen-xl text-center mb-5">
-        <h1 className="mb-4 text-2xl font-semibold tracking-tight leading-none text-orange-500 md:text-3xl lg:text-6xl dark:text-white">
+        <h1 className="mb-4 text-2xl font-semibold tracking-tight leading-none text-orange-500 md:text-4xl">
           Para quem quer comer bem, todos os dias.
         </h1>
         <p className="mb-4 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
