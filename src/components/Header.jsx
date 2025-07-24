@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 import { useAuthentication } from "../authentication/useAuthentication";
@@ -86,7 +86,7 @@ const Header = () => {
                       to="/login"
                       className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                     >
-                      Entrar
+                      Login
                     </NavLink>
                   </li>
                 </>
@@ -112,7 +112,7 @@ const Header = () => {
                   <li>
                     <buttom
                       onClick={logout}
-                      className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                      className="block py-2 px-3 text-gray-900 rounded-sm cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                     >
                       Sair
                     </buttom>
@@ -123,6 +123,15 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-2">
+        {user ? (
+          <p>Bem-vindo(a) <strong>{user.displayName}</strong></p>
+        ) : (
+          <p>Faça o <Link to="/login" className="underline">login</Link> ou <Link to="/register" className="underline">cadastre-se.</Link></p>
+        )}
+        
+        <p className="text-green-700 font-semibold">Loja aberta</p>
+      </div>
     </header>
   );
 };

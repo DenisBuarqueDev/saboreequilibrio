@@ -13,6 +13,7 @@ const index = () => {
 
   const [salad, setSalad] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
     let isMounted = true; // Flag para checar se o componente ainda está montado
@@ -25,6 +26,7 @@ const index = () => {
         if (docSnap.exists()) {
           if (isMounted) {
             setSalad({ id: docSnap.id, ...docSnap.data() });
+            setSubtotal(docSnap.data().price * quantity);
           }
         } else {
           console.log("Documento não encontrado!");
@@ -39,6 +41,13 @@ const index = () => {
       isMounted = false; // ⚠️ Cleanup: marca como desmontado
     };
   }, [id]);
+
+  // Atualiza subtotal sempre que a quantidade mudar
+  useEffect(() => {
+    if (salad) {
+      setSubtotal(salad.price * quantity);
+    }
+  }, [quantity, salad]);
 
   if (!salad) {
     return <p>Carregando...</p>;
@@ -83,11 +92,6 @@ const index = () => {
     return;
   };
 
-  const formatDecimalBR = (value) => {
-    if (isNaN(value)) return "0,00";
-    return Number(value).toFixed(2).replace(".", ",");
-  };
-
   return (
     <main className="bg-white">
       <CategoriesComponent />
@@ -107,7 +111,9 @@ const index = () => {
           {salad.title}
         </h1>
         <h2>{salad.subtitle}</h2>
-        <p className="flex mt-5 font-bold">R$ {salad.price.toFixed(2).replace(".",",")}</p>
+        <p className="flex mt-5 font-bold">
+          R$ {salad.price.toFixed(2).replace(".", ",")}
+        </p>
         <p className="flex items-center my-5">
           <FaClock className="mr-2" /> {salad.time}
         </p>
@@ -151,7 +157,7 @@ const index = () => {
             type="button"
             className="flex items-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
           >
-            Adicionar R$ {formatDecimalBR(quantity * salad.price)}{" "}
+            Adicionar R$ {subtotal.toFixed(2).replace(".", ",")}{" "}
             <FaCartArrowDown className="ml-2" />
           </button>
         </div>
