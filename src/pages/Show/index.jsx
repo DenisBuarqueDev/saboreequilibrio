@@ -75,10 +75,12 @@ const index = () => {
 
   const increment = () => {
     setQuantity((prev) => prev + 1);
+    return;
   };
 
   const decrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+    return;
   };
 
   const formatDecimalBR = (value) => {

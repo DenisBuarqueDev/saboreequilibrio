@@ -11,7 +11,7 @@ const Footer = () => {
         <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0">
           <li>
             <Link to="/" className="hover:underline me-4 md:me-6">
-              Home
+              Início
             </Link>
           </li>
           <li>
@@ -31,7 +31,7 @@ const Footer = () => {
           </li>
           <li>
             <Link to="/login" className="hover:underline me-4 md:me-6">
-              Log In
+              Entrar
             </Link>
           </li>
         </ul>

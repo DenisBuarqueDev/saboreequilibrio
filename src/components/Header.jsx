@@ -2,7 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
+import { useAuthentication } from "../authentication/useAuthentication";
+import { useAuthValue } from "../context/AuthContext";
+
 const Header = () => {
+  const { user } = useAuthValue();
+  const { logout } = useAuthentication();
+
   return (
     <header>
       <nav className="bg-white border-gray-200 border-b">
@@ -46,7 +52,7 @@ const Header = () => {
                   to="/"
                   className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                 >
-                  Home
+                  Início
                 </NavLink>
               </li>
               <li>
@@ -62,25 +68,57 @@ const Header = () => {
                   to="/cart"
                   className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                 >
-                  Cart Shopp
+                  Carrinho
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/register"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
-                >
-                  Cadastre-se
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/login"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
-                >
-                  Log In
-                </NavLink>
-              </li>
+              {!user && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/register"
+                      className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                    >
+                      Cadastre-se
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/login"
+                      className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                    >
+                      Entrar
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {user && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/perfil"
+                      className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                    >
+                      Perfil
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard"
+                      className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                    >
+                      Pedidos
+                    </NavLink>
+                  </li>
+                  <li>
+                    <buttom
+                      onClick={logout}
+                      className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                    >
+                      Sair
+                    </buttom>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
