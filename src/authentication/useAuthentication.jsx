@@ -48,7 +48,6 @@ export const useAuthentication = () => {
       setLoading(false);
 
       return user;
-
     } catch (error) {
       let systemErrorMessage;
 
@@ -73,24 +72,35 @@ export const useAuthentication = () => {
     checkIfIsCancelled();
 
     setLoading(true);
-    setErrorAuth(false);
+    setErrorAuth(null); // limpa erros anteriores
 
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      setLoading(false);
-      navigate("/");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      const user = userCredential.user;
+
+      if (user) {
+        navigate("/"); // Redireciona após login bem-sucedido
+      }
     } catch (error) {
+      console.error("Erro de login:", error);
+
       let systemErrorMessage;
 
-      if (error.message.includes("user-not-found")) {
+      if (error.code === "auth/user-not-found") {
         systemErrorMessage = "Usuário não encontrado.";
-      } else if (error.message.includes("wrong-password")) {
+      } else if (error.code === "auth/wrong-password") {
         systemErrorMessage = "Senha incorreta.";
       } else {
-        systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
+        systemErrorMessage = "Erro ao fazer login. Tente novamente.";
       }
 
       setErrorAuth(systemErrorMessage);
+    } finally {
       setLoading(false);
     }
   };

@@ -9,6 +9,17 @@ const Header = () => {
   const { user } = useAuthValue();
   const { logout } = useAuthentication();
 
+  const getSaudacao = () => {
+    const hora = new Date().getHours();
+
+    if (hora >= 10 && hora < 18) {
+      return "Loja aberta.";
+
+    } else {
+      return "Loja fechada";
+    }
+  };
+
   return (
     <header>
       <nav className="bg-white border-gray-200 border-b">
@@ -130,7 +141,7 @@ const Header = () => {
           <p><Link to="/login" className="underline">Entre</Link> ou <Link to="/register" className="underline">cadastre-se.</Link></p>
         )}
         
-        <p className="text-green-700 font-semibold">Loja aberta</p>
+        <p className="text-green-700 font-semibold">{getSaudacao()}</p>
       </div>
     </header>
   );
