@@ -9,10 +9,13 @@ import {
 } from "firebase/auth";
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useAuthentication = () => {
   const [errorAuth, setErrorAuth] = useState(null);
   const [loading, setLoading] = useState(null);
+
+  const navigate = useNavigate();
 
   //cleanup
   const [cancelled, setCancelled] = useState(false);
@@ -75,6 +78,7 @@ export const useAuthentication = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       setLoading(false);
+      navigate("/");
     } catch (error) {
       let systemErrorMessage;
 

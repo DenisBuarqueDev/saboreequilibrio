@@ -57,7 +57,7 @@ const Footer = () => {
               </li>
               <li>
                 <buttom onClick={logout} className="hover:underline me-4 md:me-6 cursor-pointer">
-                  Sair
+                  Entrar
                 </buttom>
               </li>
             </>

@@ -42,10 +42,20 @@ const index = () => {
     };
   }, [id]);
 
+  const increment = () => {
+    setQuantity((prev) => prev + 1);
+    return;
+  };
+
+  const decrement = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+    return;
+  };
+
   // Atualiza subtotal sempre que a quantidade mudar
   useEffect(() => {
     if (salad) {
-      setSubtotal(salad.price * quantity);
+      setSubtotal(quantity * salad.price);
     }
   }, [quantity, salad]);
 
@@ -80,16 +90,6 @@ const index = () => {
     } catch (err) {
       console.error("Erro ao adicionar pedido:", err);
     }
-  };
-
-  const increment = () => {
-    setQuantity((prev) => prev + 1);
-    return;
-  };
-
-  const decrement = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-    return;
   };
 
   return (

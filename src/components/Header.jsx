@@ -86,7 +86,7 @@ const Header = () => {
                       to="/login"
                       className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                     >
-                      Login
+                      Entrar
                     </NavLink>
                   </li>
                 </>
@@ -127,7 +127,7 @@ const Header = () => {
         {user ? (
           <p>Bem-vindo(a) <strong>{user.displayName}</strong></p>
         ) : (
-          <p>Faça o <Link to="/login" className="underline">login</Link> ou <Link to="/register" className="underline">cadastre-se.</Link></p>
+          <p><Link to="/login" className="underline">Entre</Link> ou <Link to="/register" className="underline">cadastre-se.</Link></p>
         )}
         
         <p className="text-green-700 font-semibold">Loja aberta</p>
