@@ -74,6 +74,7 @@ export const useAuthentication = () => {
   const logout = () => {
     if (checkIfIsCancelled()) return;
     signOut(auth);
+    navigate("/login");
   };
 
   const login = async (data) => {
