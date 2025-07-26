@@ -143,7 +143,7 @@ const index = () => {
 
       alert("Pedido realizado com sucesso!");
 
-      navigate("/");
+      navigate("/dashboard");
 
     } catch (err) {
       console.error("Erro ao finalizar pedido:", err);
@@ -219,14 +219,14 @@ const index = () => {
               </li>
               <li className="flex justify-between">
                 <p>Taxa de entrega</p>
-                <p>R$ 5,00</p>
+                <p>R$ 0,00</p>
               </li>
             </ul>
             <hr />
             <ul className="my-5">
               <li className="flex justify-between">
                 <p>Total</p>
-                <strong>R$ {(5 + total).toFixed(2).replace(".", ",")}</strong>
+                <strong>R$ {total.toFixed(2).replace(".", ",")}</strong>
               </li>
             </ul>
             <strong className="mb-2">Forma de Pagamento:</strong>
