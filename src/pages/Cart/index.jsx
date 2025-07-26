@@ -14,14 +14,28 @@ const index = () => {
     if (storedItems) {
       const parsedItems = JSON.parse(storedItems);
       setCartItems(parsedItems);
+
+      // Já calcula o total aqui
+      const totalValue = parsedItems.reduce(
+        (acc, item) => acc + item.subtotal,
+        0
+      );
+      setTotal(totalValue);
     }
     setLoading(false);
   }, []);
 
-  // Recalcula o total sempre que cartItems mudar
+  // Recalcula o total sempre que cartItems mudar (ex: após remoção)
   useEffect(() => {
-    const totalValue = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
-    setTotal(totalValue);
+    if (cartItems.length > 0) {
+      const totalValue = cartItems.reduce(
+        (acc, item) => acc + item.subtotal,
+        0
+      );
+      setTotal(totalValue);
+    } else {
+      setTotal(0);
+    }
   }, [cartItems]);
 
   const removeItem = (id) => {

@@ -91,8 +91,6 @@ export const useAuthentication = () => {
 
       const user = userCredential.user;
 
-      //setLoading(false);
-
       if (user) {
         navigate("/"); // Redireciona após login bem-sucedido
       }
