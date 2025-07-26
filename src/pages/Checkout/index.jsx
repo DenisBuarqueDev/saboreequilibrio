@@ -88,7 +88,10 @@ const index = () => {
     setPayment(event.target.value);
   };
 
-  const handleCheckout = async () => {
+  const handleCheckout = async (e) => {
+
+    e.preventDefault();
+
     if (!auth.currentUser) {
       setError("Você precisa estar logado para finalizar o pedido.");
       return;
