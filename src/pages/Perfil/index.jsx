@@ -187,7 +187,7 @@ const index = () => {
               className="flex items-center justify-center text-white bg-green-700 mt-2 focus:ring-green-300 hover:bg-green-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               <FaSave className="mr-2" />
-              {loading ? "Salvando..." : "Salvar Endereço"}
+              {!loading ? "Salvando..." : "Salvar Endereço"}
             </button>
           </div>
           {error && <p style={{ color: "red" }}>{error}</p>}
