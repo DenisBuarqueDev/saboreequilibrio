@@ -113,6 +113,7 @@ const index = () => {
       // 1. Adiciona ordem principal
       const orderRef = await addDoc(collection(db, "orders"), {
         user_id: user.uid,
+        name: user.displayName,
         address: `${address.street}, ${address.number} - ${address.district} - ${address.zipCode}, ${address.complement} - Maceió - Alagoas`,
         type_payment: payment,
         status_order: "pendente", // status inicial

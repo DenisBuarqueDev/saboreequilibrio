@@ -107,13 +107,23 @@ const index = () => {
               <FaCreditCard className="mr-2 w-5 h-5" />
               <p className="text-xl">R$ {total.toFixed(2).replace(".", ",")}</p>
             </div>
-            <Link
-              to="/checkout"
-              className="flex items-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
-            >
-              Pagamento R$ {total.toFixed(2).replace(".", ",")}
-              <FaArrowRight className="ml-2" />
-            </Link>
+            {total !== 0 ? (
+              <Link
+                to="/checkout"
+                className="flex items-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
+              >
+                Pagamento R$ {total.toFixed(2).replace(".", ",")}
+                <FaArrowRight className="ml-2" />
+              </Link>
+            ) : (
+              <button
+                type="button" disabled
+                className="flex items-center text-white bg-gray-500 hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-500 font-medium rounded-full text-sm px-5 py-2.5 text-center"
+              >
+                Pagamento R$ {total.toFixed(2).replace(".", ",")}
+                <FaArrowRight className="ml-2" />
+              </button>
+            )}
           </div>
         )}
       </div>

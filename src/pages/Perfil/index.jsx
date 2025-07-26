@@ -7,67 +7,85 @@ import { FaSave } from "react-icons/fa";
 const index = () => {
   const { auth } = useAuthentication();
 
-  const [uid, setUid] = useState(null);
-  const [street, setStreet] = useState("");
-  const [number, setNumber] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [complement, setComplement] = useState("");
-  const [district, setDistrict] = useState("");
-
-  const address = {
-    street,
-    number,
-    district,
+  const [userId, setUserId] = useState(null);
+  const [formData, setFormData] = useState({
+    street: "",
+    number: "",
+    zipCode: "",
+    complement: "",
+    district: "",
     city: "Maceió",
     state: "Alagoas",
-    zipCode,
-    complement,
-  };
+  });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Carrega endereço do usuário
   useEffect(() => {
-    const fetchUsuario = async () => {
+    const fetchAddress = async () => {
       const user = auth.currentUser;
-      if (user) {
-        setUid(user.uid);
+      if (!user) return;
 
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
+      setUserId(user.uid);
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data) {
-            setZipCode(data.zipCode);
-            setStreet(data.street);
-            setNumber(data.number);
-            setDistrict(data.district);
-            setComplement(data.complement);
-          }
-        }
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setFormData((prev) => ({
+          ...prev,
+          ...data,
+        }));
       }
     };
 
-    fetchUsuario();
+    fetchAddress();
   }, []);
 
-  const handleSalvar = async (e) => {
+  // Manipula mudança nos inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Salva endereço no Firestore
+  const handleSave = async (e) => {
     e.preventDefault();
 
-    if (!uid) return;
+    if (!userId) return;
+
+    const { street, number, zipCode, district } = formData;
+
+    if (!street || !number || !zipCode || !district) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
 
     try {
-      await setDoc(doc(db, "users", uid), address, { merge: true });
-      alert("Endereço atualizado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao salvar endereço:", error);
+      setLoading(true);
+      setError(null);
+      await setDoc(doc(db, "users", userId), formData, { merge: true });
+      alert("Endereço salvo com sucesso!");
+      return;
+    } catch (err) {
+      console.error("Erro ao salvar:", err);
+      setError("Erro ao salvar o endereço. Tente novamente.");
+      return;
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <main className="bg-white">
       <section className="p-3 mx-auto max-w-screen-md lg:py-8">
-        <h1 className="text-2xl font-semibold text-green-700 mb-2">Perfil</h1>
+        <h1 className="text-2xl font-semibold text-green-700 mb-2">Endereço</h1>
 
-        <form className="w-full mt-3">
+        <form className="w-full mt-3 border border-gray-200 rounded-lg bg-white p-4 shadow-md">
           <div className="grid grid-cols-1 mb-2 md:grid-cols-4 md:gap-2">
             <div className="col-span-1">
               <label
@@ -80,8 +98,8 @@ const index = () => {
                 type="text"
                 id="zipCode"
                 name="zizCode"
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
+                value={formData.zipCode}
+                onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
               />
@@ -97,8 +115,8 @@ const index = () => {
                 type="text"
                 id="street"
                 name="street"
-                value={street}
-                onChange={(e) => setStreet(e.target.value)}
+                value={formData.street}
+                onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700"
                 required
               />
@@ -114,8 +132,8 @@ const index = () => {
                 type="text"
                 id="number"
                 name="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
+                value={formData.number}
+                onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
               />
@@ -134,8 +152,8 @@ const index = () => {
                 type="text"
                 id="district"
                 name="district"
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
+                value={formData.district}
+                onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
               />
@@ -151,20 +169,24 @@ const index = () => {
                 type="text"
                 id="complement"
                 name="complement"
-                value={complement}
-                onChange={(e) => setComplement(e.target.value)}
+                value={formData.complement}
+                onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               />
             </div>
           </div>
-          <button
-            onClick={handleSalvar}
-            className="flex items-center justify-center text-white bg-green-700 mt-2 focus:ring-green-300 hover:bg-green-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            <FaSave className="mr-2" />
-            Salvar
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex items-center justify-center text-white bg-green-700 mt-2 focus:ring-green-300 hover:bg-green-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            >
+              <FaSave className="mr-2" />
+              {loading ? "Salvando..." : "Salvar Endereço"}
+            </button>
+          </div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </section>
     </main>

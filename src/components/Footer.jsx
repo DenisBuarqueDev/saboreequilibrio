@@ -47,7 +47,7 @@ const Footer = () => {
             <>
               <li>
                 <Link to="/perfil" className="hover:underline me-4 md:me-6">
-                  Perfil
+                  Endereço
                 </Link>
               </li>
               <li>
