@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase/conection";
 import { useAuthentication } from "../../authentication/useAuthentication";
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -6,6 +7,8 @@ import { FaSave } from "react-icons/fa";
 
 const index = () => {
   const { auth } = useAuthentication();
+
+  const navigate = useNavigate();
 
   const [userId, setUserId] = useState(null);
   const [formData, setFormData] = useState({
@@ -18,7 +21,7 @@ const index = () => {
     state: "Alagoas",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Carrega endereço do usuário
@@ -38,6 +41,7 @@ const index = () => {
           ...data,
         }));
       }
+      setLoading(false);
     };
 
     fetchAddress();
@@ -70,7 +74,7 @@ const index = () => {
       setError(null);
       await setDoc(doc(db, "users", userId), formData, { merge: true });
       alert("Endereço salvo com sucesso!");
-      return;
+      navigate("/cart");
     } catch (err) {
       console.error("Erro ao salvar:", err);
       setError("Erro ao salvar o endereço. Tente novamente.");
@@ -85,7 +89,7 @@ const index = () => {
       <section className="p-3 mx-auto max-w-screen-md lg:py-8">
         <h1 className="text-2xl font-semibold text-green-700 mb-2">Endereço</h1>
 
-        <form className="w-full mt-3 border border-gray-200 rounded-lg bg-white p-4 shadow-md">
+        <form onSubmit={handleSave} className="w-full mt-3 border border-gray-200 rounded-lg bg-white p-4 shadow-md">
           <div className="grid grid-cols-1 mb-2 md:grid-cols-4 md:gap-2">
             <div className="col-span-1">
               <label

@@ -105,7 +105,7 @@ const index = () => {
           <div className="flex items-center justify-between border rounded shadow p-2">
             <div className="flex items-center">
               <FaCreditCard className="mr-2 w-5 h-5" />
-              <p className="text-xl">R$ {total.toFixed(2).replace(".", ",")}</p>
+              <p className="text-xl">R$ {total && total.toFixed(2).replace(".", ",")}</p>
             </div>
             {total !== 0 ? (
               <Link
