@@ -42,7 +42,7 @@ const Register = () => {
     <div className="flex items-center justify-center w-full h-screen">
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto border rounded-md shadow-sm p-4"
+        className="max-w-screen-md mx-auto border rounded-md shadow-sm p-4"
       >
         <h1 className="flex items-center text-xl font-semibold text-green-700">
           <Link to="/">
@@ -53,22 +53,22 @@ const Register = () => {
         <p>Cadastre-se para criar uma nova conta.</p>
 
         <div className="mb-2">
-            <label
-              htmlFor="displayName"
-              className="block text-sm font-medium text-gray-900"
-            >
-              Nome:
-            </label>
-            <input
-              type="text"
-              id="displayName"
-              className="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-              placeholder="Digite seu nome."
-              required
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
-          </div>
+          <label
+            htmlFor="displayName"
+            className="block text-sm font-medium text-gray-900"
+          >
+            Nome:
+          </label>
+          <input
+            type="text"
+            id="displayName"
+            className="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+            placeholder="Digite seu nome."
+            required
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+        </div>
 
         <div className="mb-2">
           <label
@@ -129,7 +129,7 @@ const Register = () => {
               value={isChecked}
               onChange={handleCheckboxChange}
               className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-green-300"
-              required 
+              required
             />
           </div>
           <label
@@ -144,8 +144,13 @@ const Register = () => {
         </div>
 
         {!loading ? (
-          <button disabled={!isChecked}
-            className={`flex items-center justify-center text-white ${isChecked ? 'bg-green-700 focus:ring-green-300 hover:bg-green-800' : 'bg-gray-400 focus:ring-gray-400 hover:bg-gray-400'} focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
+          <button
+            disabled={!isChecked}
+            className={`flex items-center justify-center text-white ${
+              isChecked
+                ? "bg-green-700 focus:ring-green-300 hover:bg-green-800"
+                : "bg-gray-400 focus:ring-gray-400 hover:bg-gray-400"
+            } focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
           >
             <FaSave className="mr-2" />
             Criar Conta

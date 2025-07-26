@@ -133,7 +133,6 @@ const index = () => {
               name="quantity"
               value={quantity}
               className="p-1 w-10 text-xl text-center border rounded shadow-sm mx-1"
-              disabled
               readOnly
             />
             <button

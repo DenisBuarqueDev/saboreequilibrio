@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 export const useAuthentication = () => {
   const [errorAuth, setErrorAuth] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,17 +21,18 @@ export const useAuthentication = () => {
   const [cancelled, setCancelled] = useState(false);
 
   function checkIfIsCancelled() {
-    if (cancelled) {
-      return;
+    if (!cancelled) {
+      return true;
     }
+    return false;
   }
 
   const auth = getAuth();
 
   const createUser = async (data) => {
-    checkIfIsCancelled();
 
-    setLoading(false);
+    if (checkIfIsCancelled()) return;
+
     setErrorAuth(null);
 
     try {
@@ -51,27 +52,34 @@ export const useAuthentication = () => {
     } catch (error) {
       let systemErrorMessage;
 
-      if (error.message.includes("Password")) {
-        systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres.";
-      } else if (error.message.includes("email-already")) {
-        systemErrorMessage = "E-mail já cadastrado.";
-      } else {
-        systemErrorMessage = "Ocorreu um error...";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          systemErrorMessage = "E-mail já cadastrado.";
+          break;
+        case "auth/weak-password":
+          systemErrorMessage = "A senha precisa ter pelo menos 6 caracteres.";
+          break;
+        case "auth/invalid-email":
+          systemErrorMessage = "E-mail inválido.";
+          break;
+        default:
+          systemErrorMessage = "Erro ao cadastrar. Tente novamente.";
       }
-      setLoading(false);
       setErrorAuth(systemErrorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = () => {
-    checkIfIsCancelled();
+    if (checkIfIsCancelled()) return;
     signOut(auth);
   };
 
   const login = async (data) => {
-    checkIfIsCancelled();
 
-    setLoading(true);
+    if (checkIfIsCancelled()) return;
+
     setErrorAuth(null); // limpa erros anteriores
 
     try {
@@ -83,11 +91,14 @@ export const useAuthentication = () => {
 
       const user = userCredential.user;
 
+      //setLoading(false);
+
       if (user) {
         navigate("/"); // Redireciona após login bem-sucedido
       }
+
     } catch (error) {
-      console.error("Erro de login:", error);
+      //console.error("Erro de login:", error);
 
       let systemErrorMessage;
 
