@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   doc,
-  setDoc,
   getDoc,
   collection,
   addDoc,
@@ -17,6 +16,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { useAuthentication } from "../../authentication/useAuthentication";
+import GoogleMapComponent from "../../components/GoogleMapComponent";
 
 const index = () => {
   const { auth } = useAuthentication();
@@ -119,7 +119,7 @@ const index = () => {
         name: user.displayName,
         address: `${address.street}, ${address.number} - ${address.district} - ${address.zipCode}, ${address.complement} - Maceió - Alagoas`,
         type_payment: payment,
-        status_order: "pendente", // status inicial
+        status_order: "Preparando", // status inicial
         subtotal: total,
         created_at: Timestamp.now(),
       });

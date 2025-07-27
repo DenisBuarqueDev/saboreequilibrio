@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { FaArrowLeft, FaHome, FaBell, FaCartPlus, FaUserCircle, FaMapMarkerAlt } from "react-icons/fa";
-import { FaArrowRightToBracket, FaArrowRightFromBracket } from "react-icons/fa6";
+import {
+  FaArrowLeft,
+  FaHome,
+  FaBell,
+  FaCartPlus,
+  FaUserCircle,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+import {
+  FaArrowRightToBracket,
+  FaArrowRightFromBracket,
+} from "react-icons/fa6";
 
 import { useAuthentication } from "../authentication/useAuthentication";
 import { useAuthValue } from "../context/AuthContext";
@@ -61,10 +71,7 @@ const Header = () => {
           </button>
 
           {isOpen && (
-            <div
-              className="w-full block"
-              id="navbar-default"
-            >
+            <div className="w-full block" id="navbar-default">
               <ul className="font-medium flex flex-col gap-1 p-2 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white ">
                 <li className="flex items-center p-3 border border-gray-200 hover:bg-transparent rounded-md">
                   <FaHome className="mr-3" />
@@ -129,9 +136,9 @@ const Header = () => {
                     <li className="flex items-center p-3 border border-gray-200 rounded-md hover:bg-transparent">
                       <buttom
                         onClick={logout}
-                        className="block text-gray-900 rounded-sm cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
+                        className="flex items-center text-gray-900 rounded-sm cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                       >
-                        <FaArrowRightFromBracket className="mr-3"/>
+                        <FaArrowRightFromBracket className="mr-3" />
                         Sair
                       </buttom>
                     </li>

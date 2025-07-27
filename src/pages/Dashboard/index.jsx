@@ -4,6 +4,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/conection";
 import { useAuthentication } from "../../authentication/useAuthentication";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { MdDeliveryDining } from "react-icons/md";
 
 const index = () => {
   const { auth } = useAuthentication();
@@ -68,12 +69,30 @@ const index = () => {
             className="flex flex-col p-3 rounded border shadow mb-2"
           >
             <div className="flex justify-between items-center">
-              <p className="text-sm bg-orange-500 text-white px-3 rounded-full">
-                {order.status_order}
-              </p>
-              <p className="text-sm">
-                {order.created_at.toDate().toLocaleString("pt-BR")}
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm bg-orange-500 text-white px-3 rounded-full">
+                  {order.status_order}
+                </p>
+                <p className="text-sm">
+                  {order.created_at.toDate().toLocaleString("pt-BR")}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <MdDeliveryDining />
+                <p className="text-sm">
+                  {(() => {
+                    const date = order.created_at.toDate();
+                    date.setMinutes(date.getMinutes() + 50); // adiciona 50 minutos
+
+                    return date.toLocaleTimeString("pt-BR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    });
+                  })()}
+                </p>
+              </div>
             </div>
             <ul className="my-2">
               {order.items.map((item) => (

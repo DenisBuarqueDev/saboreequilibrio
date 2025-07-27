@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../firebase/conection";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { FaRegHeart } from "react-icons/fa";
 
 const SaladsComponent = () => {
   const [salads, setSalads] = useState([]);
