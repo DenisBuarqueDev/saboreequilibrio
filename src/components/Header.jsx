@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { FaArrowLeft, FaHome, FaCartPlus, FaUserCircle, FaMapMarkerAlt } from "react-icons/fa";
+import { FaArrowLeft, FaHome, FaBell, FaCartPlus, FaUserCircle, FaMapMarkerAlt } from "react-icons/fa";
 import { FaArrowRightToBracket, FaArrowRightFromBracket } from "react-icons/fa6";
 
 import { useAuthentication } from "../authentication/useAuthentication";
