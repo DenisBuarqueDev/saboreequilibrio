@@ -13,7 +13,6 @@ import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Show from "./pages/Show";
 import Category from "./pages/Category";
 import Cart from "./pages/Cart";
@@ -54,7 +53,6 @@ function App() {
         {!hideLayout && <Header />}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
           <Route path="/show/:id" element={<Show />} />
           <Route path="/category/:id" element={<Category />} />
           <Route path="/cart" element={<Cart />} />

@@ -51,7 +51,7 @@ const SaladsComponent = () => {
       <section className="bg-white mt-4">
         <div className="p-4 mx-auto max-w-screen-xl text-center lg:py-8">
           {/*<h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-green-700 md:text-5xl lg:text-6xl">Busque pelo que mais gosta.</h1>*/}
-          <p className="mb-8 text-2xl font-semibold text-orange-500 lg:text-3xl sm:px-16">
+          <p className="hidden mb-8 text-2xl font-semibold text-orange-500 sm:px-16 md:block lg:text-3xl">
             Oferecemos opções práticas, deliciosas e nutritivas, feitas com
             ingredientes selecionados para cuidar do seu corpo e da sua mente.
           </p>
@@ -64,7 +64,7 @@ const SaladsComponent = () => {
                 onChange={(e) => setSearch(e.target.value)}
                 id="default-email"
                 className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-green-500 focus:border-green-500"
-                placeholder="Busque pelo ingrediente."
+                placeholder="Pesquise por: frango"
                 required
               />
             </div>
