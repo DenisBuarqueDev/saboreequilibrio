@@ -118,7 +118,7 @@ const Header = () => {
                     <li className="flex items-center p-3 border border-gray-200 rounded-md hover:bg-transparent">
                       <FaMapMarkerAlt className="mr-3" />
                       <NavLink
-                        to="/perfil"
+                        to="/address"
                         className="block text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                       >
                         Endereço
@@ -127,7 +127,7 @@ const Header = () => {
                     <li className="flex items-center p-3 border border-gray-200 rounded-md hover:bg-transparent">
                       <FaBell className="mr-3" />
                       <NavLink
-                        to="/dashboard"
+                        to="/orders"
                         className="block text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0"
                       >
                         Pedidos

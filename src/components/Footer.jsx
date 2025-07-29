@@ -41,12 +41,12 @@ const Footer = () => {
           {user && (
             <>
               <li>
-                <Link to="/perfil" className="hover:underline me-4 md:me-6">
+                <Link to="/address" className="hover:underline me-4 md:me-6">
                   Endereço
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="hover:underline me-4 md:me-6">
+                <Link to="/orders" className="hover:underline me-4 md:me-6">
                   Pedidos
                 </Link>
               </li>

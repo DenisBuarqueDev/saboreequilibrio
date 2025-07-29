@@ -57,7 +57,7 @@ const index = () => {
         const user = auth.currentUser;
 
         if (user) {
-          const docRef = doc(db, "users", user.uid);
+          const docRef = doc(db, "address", user.uid);
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
@@ -143,7 +143,7 @@ const index = () => {
 
       alert("Pedido realizado com sucesso!");
 
-      navigate("/dashboard");
+      navigate("/orders");
 
     } catch (err) {
       console.error("Erro ao finalizar pedido:", err);
@@ -168,7 +168,7 @@ const index = () => {
                 <strong>Endereço:</strong>
               </div>
               <Link
-                to="/perfil"
+                to="/address"
                 className="flex items-center text-sm text-gray-400 underline"
               >
                 <FaEdit className="mr-1" />
@@ -254,7 +254,7 @@ const index = () => {
                       checked={payment === "credcard"}
                       onChange={handleChange}
                     />{" "}
-                    Cartão de Crédito
+                    Cartão Crédito/Débito
                   </div>
                   <FaCreditCard className="text-red-800" />
                 </li>

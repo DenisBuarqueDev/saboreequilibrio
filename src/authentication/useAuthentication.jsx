@@ -1,4 +1,5 @@
 import { db } from "../firebase/conection";
+import { doc, setDoc } from "firebase/firestore";
 
 import {
   getAuth,
@@ -21,7 +22,7 @@ export const useAuthentication = () => {
   const [cancelled, setCancelled] = useState(false);
 
   function checkIfIsCancelled() {
-    if (cancelled) {
+    if (!cancelled) {
       return true;
     }
     return false;
@@ -30,10 +31,11 @@ export const useAuthentication = () => {
   const auth = getAuth();
 
   const createUser = async (data) => {
-
     if (checkIfIsCancelled()) return;
 
     setErrorAuth(null);
+
+    setLoading(true);
 
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -42,11 +44,19 @@ export const useAuthentication = () => {
         data.password
       );
 
+      // Atualiza o perfil no Auth
       await updateProfile(user, {
         displayName: data.displayName,
       });
 
-      setLoading(false);
+      // Cria o documento na collection 'users' no Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        displayName: data.displayName,
+        isAdmin: false, // ou false por padrão
+        createdAt: new Date(),
+      });
 
       return user;
     } catch (error) {
@@ -78,10 +88,11 @@ export const useAuthentication = () => {
   };
 
   const login = async (data) => {
-
     if (checkIfIsCancelled()) return;
 
     setErrorAuth(null); // limpa erros anteriores
+
+    setLoading(true);
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -95,7 +106,6 @@ export const useAuthentication = () => {
       if (user) {
         navigate("/"); // Redireciona após login bem-sucedido
       }
-
     } catch (error) {
       //console.error("Erro de login:", error);
 

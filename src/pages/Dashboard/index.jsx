@@ -1,27 +1,25 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { useAdminCheck } from "../../authentication/useAdminCheck";
+import { Navigate, Link } from "react-router-dom";
 import { db } from "../../firebase/conection";
-import { useAuthentication } from "../../authentication/useAuthentication";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { FaMapMarkerAlt, FaCalendar, FaPrint } from "react-icons/fa";
 import { MdDeliveryDining } from "react-icons/md";
 
 const index = () => {
-  const { auth } = useAuthentication();
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(true);
+
+  const { isAdmin, loading } = useAdminCheck();
 
   // Busca os pedidos do usuário atual
   useEffect(() => {
     const fetchOrders = async () => {
-      const user = auth.currentUser;
-      if (!user) return;
+      //const user = auth.currentUser;
+      //if (!user) return;
 
       try {
-        const q = query(
-          collection(db, "orders"),
-          where("user_id", "==", user.uid)
-        );
+        const q = query(collection(db, "orders"), orderBy("created_at", "asc"));
         const querySnapshot = await getDocs(q);
 
         const ordersWithItems = await Promise.all(
@@ -48,83 +46,126 @@ const index = () => {
       } catch (error) {
         console.error("Erro ao buscar pedidos:", error);
       } finally {
-        setLoading(false);
+        setLoad(false);
       }
     };
 
     fetchOrders();
   }, []);
 
-  if (loading) return <p>Carregando pedidos...</p>;
+  if (loading) return <p>Carregando...</p>;
 
-  if (orders.length === 0) return <p>Você ainda não fez pedidos.</p>;
+  if (!isAdmin) return <Navigate to="/" />; // ou para uma página de acesso negado
+
+  if (load) return <p>Carregando...</p>;
 
   return (
     <main className="bg-white">
-      <section className="p-3 mx-auto max-w-screen-md lg:py-8">
-        <h1 className="text-2xl font-semibold text-green-700 mb-2">Pedidos</h1>
-        {orders.map((order) => (
-          <article
-            key={order.id}
-            className="flex flex-col p-3 rounded border shadow mb-2"
-          >
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <p className="text-sm bg-orange-500 text-white px-3 rounded-full">
-                  {order.status_order}
-                </p>
-                <p className="text-sm">
-                  {order.created_at.toDate().toLocaleString("pt-BR")}
-                </p>
-              </div>
+      <div className="max-w-screen-xl mx-auto">
+        <ul className="flex gap-2 items-center my-3">
+          <li>
+            <Link to="/dashboard" className="py-2 px-5 border rounded">
+              Preparando (0)
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard" className="py-2 px-5 border rounded">
+              Entregando (0)
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard" className="py-2 px-5 border rounded">
+              Finalizados (0)
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard" className="py-2 px-5 border rounded">
+              Cancelados (0)
+            </Link>
+          </li>
+        </ul>
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+          {orders &&
+            orders.map((order) => (
+              <article
+                key={order.id}
+                className="flex flex-col justify-between p-3 rounded border shadow"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <strong>{order.name}</strong>
+                    <div>
+                      <select className="border p-1 rounded text-sm mr-2">
+                        <option value="preparing">{order.status_order}</option>
+                        <option value="delivering">Entregando</option>
+                        <option value="completed">Finalizado</option>
+                        <option value="canceled">Cancelado</option>
+                      </select>
+                      <button>
+                        <FaPrint />
+                      </button>
+                    </div>
+                  </div>
 
-              <div className="flex items-center gap-2">
-                <MdDeliveryDining />
-                <p className="text-sm">
-                  {(() => {
-                    const date = order.created_at.toDate();
-                    date.setMinutes(date.getMinutes() + 50); // adiciona 50 minutos
+                  <div className="flex justify-between items-center">
+                    <p className="flex items-center text-sm">
+                      <FaCalendar className="mr-2" />
+                      {order.created_at.toDate().toLocaleString("pt-BR")}
+                    </p>
 
-                    return date.toLocaleTimeString("pt-BR", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                    });
-                  })()}
+                    <div className="flex items-center gap-2">
+                      <MdDeliveryDining className=" text-red-600" />
+                      <p className="text-sm text-red-600 font-semibold">
+                        {(() => {
+                          const date = order.created_at.toDate();
+                          date.setMinutes(date.getMinutes() + 50); // adiciona 50 minutos
+
+                          return date.toLocaleTimeString("pt-BR", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                          });
+                        })()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ul className="my-2">
+                    {order.items.map((item) => (
+                      <li
+                        key={item.id}
+                        className="flex items-center justify-between"
+                      >
+                        <p className="text-sm">
+                          {item.quantity} {item.title}
+                        </p>
+                        <p className="text-sm">
+                          R$ {item.total.toFixed(2).replace(".", ",")}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                  <ul>
+                    <li className="flex justify-between items-center">
+                      <p className="text-sm">Pagamento {order.type_payment}</p>
+                      <p className="text-sm font-bold">
+                        R$ {order.subtotal.toFixed(2).replace(".", ",")}
+                      </p>
+                    </li>
+                    <li className="flex justify-between items-center">
+                      <p className="text-sm">Taxa entrega</p>
+                      <p className="text-sm">R$ 0,00</p>
+                    </li>
+                  </ul>
+                </div>
+                <p className="text-sm flex items-center mt-2">
+                  <FaMapMarkerAlt className="mr-2" />
+                  {order.address}
                 </p>
-              </div>
-            </div>
-            <ul className="my-2">
-              {order.items.map((item) => (
-                <li key={item.id} className="flex items-center justify-between">
-                  <p className="text-sm">
-                    {item.quantity} {item.title}
-                  </p>
-                  <p className="text-sm">
-                    R$ {item.total.toFixed(2).replace(".", ",")}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <ul>
-              <li className="flex justify-between items-center">
-                <p className="text-sm">Pagamento {order.type_payment}</p>
-                <p className="text-sm font-bold">
-                  R$ {order.subtotal.toFixed(2).replace(".", ",")}
-                </p>
-              </li>
-              <li className="flex justify-between items-center">
-                <p className="text-sm">Taxa entrega</p>
-                <p className="text-sm">R$ 0,00</p>
-              </li>
-            </ul>
-            <p className="text-sm flex items-center mt-2">
-              <FaMapMarkerAlt className="mr-2" />
-              {order.address}
-            </p>
-          </article>
-        ))}
-      </section>
+              </article>
+            ))}
+        </section>
+      </div>
     </main>
   );
 };

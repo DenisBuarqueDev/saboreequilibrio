@@ -17,7 +17,8 @@ import Show from "./pages/Show";
 import Category from "./pages/Category";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Perfil from "./pages/Perfil";
+import Address from "./pages/Address";
+import Orders from "./pages/Orders";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -57,7 +58,8 @@ function App() {
           <Route path="/category/:id" element={<Category />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={user ? <Checkout /> : <Navigate to="/login"/>} />
-          <Route path="/perfil" element={user ? <Perfil /> : <Navigate to="/login"/>} />
+          <Route path="/address" element={user ? <Address /> : <Navigate to="/login"/>} />
+          <Route path="/orders" element={user ? <Orders /> : <Navigate to="/login"/>} />
           <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login"/>} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/"/>} />
           <Route path="/register" element={!user ? <Register /> : <Navigate to="/"/>} />

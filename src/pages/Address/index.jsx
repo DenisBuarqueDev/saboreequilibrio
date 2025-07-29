@@ -31,7 +31,7 @@ const index = () => {
       if (!user) return;
 
       setUserId(user.uid);
-      const docRef = doc(db, "users", user.uid);
+      const docRef = doc(db, "address", user.uid);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -72,7 +72,7 @@ const index = () => {
     try {
       setLoading(true);
       setError(null);
-      await setDoc(doc(db, "users", userId), formData, { merge: true });
+      await setDoc(doc(db, "address", userId), formData, { merge: true });
       alert("Endereço salvo com sucesso!");
       navigate("/cart");
     } catch (err) {
@@ -101,7 +101,7 @@ const index = () => {
               <input
                 type="text"
                 id="zipCode"
-                name="zizCode"
+                name="zipCode"
                 value={formData.zipCode}
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
