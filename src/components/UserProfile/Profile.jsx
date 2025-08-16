@@ -27,8 +27,8 @@ const UserProfile = ({ userId }) => {
     }
   }, [userId]);
 
-  console.log(userId);
-  console.log(user);
+  console.log("id usuário:", userId);
+  console.log("dados do usuário:", user);
 
   if (loading) {
     return (
