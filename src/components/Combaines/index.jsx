@@ -123,7 +123,7 @@ const index = () => {
                     <div
                       className="sm:flex-1"
                       style={{
-                        backgroundImage: `url(http://localhost:5000${product.image})`,
+                        backgroundImage: `url(https://backend-saboreequilibrio.onrender.com${product.image})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",

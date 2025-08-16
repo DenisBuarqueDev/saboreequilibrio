@@ -128,7 +128,7 @@ const index = () => {
 
         {product.image && (
           <img
-            src={`http://localhost:5000${product.image}`}
+            src={`https://backend-saboreequilibrio.onrender.com${product.image}`}
             alt={product.title}
             className="w-full h-auto mb-4 rounded-lg shadow-lg"
           />

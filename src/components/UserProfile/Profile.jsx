@@ -48,7 +48,7 @@ const UserProfile = ({ userId }) => {
           {user.image ? (
             <img
               className="w-32 h-32 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              src={`http://localhost:5000${user.image}`}
+              src={`https://backend-saboreequilibrio.onrender.com${user.image}`}
               alt="Foto"
             />
           ) : (
