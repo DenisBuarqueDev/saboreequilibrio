@@ -6,11 +6,12 @@ import { FaUserCircle } from "react-icons/fa";
 
 const UserProfile = ({ userId }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setLoading(true);
         const res = await api.get(`api/auth/${userId}`, {
           withCredentials: true,
         });
@@ -26,9 +27,6 @@ const UserProfile = ({ userId }) => {
       fetchUser();
     }
   }, [userId]);
-
-  console.log("id usuário:", userId);
-  console.log("dados do usuário:", user);
 
   if (loading) {
     return (

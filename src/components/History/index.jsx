@@ -6,12 +6,13 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 const index = ({ userId }) => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const fetchOrders = async () => {
     try {
+      setLoading(true);
       const response = await api.get("api/orders/user");
       setOrders(response.data.data);
     } catch (err) {

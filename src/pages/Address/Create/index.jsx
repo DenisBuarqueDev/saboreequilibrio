@@ -11,10 +11,9 @@ const index = () => {
 
   // Manipula o envio do formulário
   const handleCreate = async (data) => {
-    setLoading(true);
     setError(null);
-
     try {
+      setLoading(true);
       // Envia a requisição para o endpoint de criação de endereço
       const response = await api.post("api/addresses", data);
       toast.success("Endereço cadastrado!");

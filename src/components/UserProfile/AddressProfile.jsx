@@ -10,8 +10,8 @@ const AddressProfile = ({ userId }) => {
 
   // Função para buscar os endereços
   const fetchAddresses = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await api.get(`api/addresses/user/${userId}`);
       setAddresses(res.data.data || []);
     } catch (err) {

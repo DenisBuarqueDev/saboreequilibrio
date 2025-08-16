@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 
 const index = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
   // 1. Função para buscar todos os produtos
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const res = await api.get(`api/products`);
       setProducts(res.data.data);
     } catch (error) {

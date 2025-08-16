@@ -20,6 +20,7 @@ const index = () => {
   useEffect(() => {
     const fetchUserImage = async () => {
       try {
+        setLoading(true);
         const { data } = await api.get(`/api/users/${id}`);
 
         if (data.data.image) {
@@ -27,6 +28,8 @@ const index = () => {
         }
       } catch (error) {
         console.error("Erro ao carregar imagem do usuário:", error);
+      } finally {
+        setLoading(false);
       }
     };
 

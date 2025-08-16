@@ -5,10 +5,11 @@ import { FaArrowRight, FaTrashAlt } from "react-icons/fa";
 const index = () => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Carrega os itens do localStorage ao montar o componente
   useEffect(() => {
+    setLoading(true);
     const storedItems = localStorage.getItem("cart");
     if (storedItems) {
       const parsedItems = JSON.parse(storedItems);

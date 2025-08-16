@@ -14,8 +14,8 @@ const index = () => {
 
   useEffect(() => {
     const fetchAddress = async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const response = await api.get(`api/addresses/${id}`);
         setAddress(response.data.data);
       } catch (err) {
