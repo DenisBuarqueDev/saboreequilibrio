@@ -27,6 +27,7 @@ const UserProfile = ({ userId }) => {
     }
   }, [userId]);
 
+  console.log(userId);
   console.log(user);
 
   if (loading) {
