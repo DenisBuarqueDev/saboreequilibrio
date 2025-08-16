@@ -87,7 +87,7 @@ const index = () => {
               <div className="flex-none">
                 <div
                   style={{
-                    backgroundImage: `url(http://localhost:5000${item.image})`,
+                    backgroundImage: `url(https://backend-saboreequilibrio.onrender.com${item.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
