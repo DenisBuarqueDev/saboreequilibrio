@@ -14,7 +14,7 @@ const UserProfile = ({ userId }) => {
         const res = await api.get(`api/auth/${userId}`, {
           withCredentials: true,
         });
-        setUser(res.data);
+        setUser(res.data.data);
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       } finally {
