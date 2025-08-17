@@ -88,7 +88,7 @@ const index = () => {
               <div className="flex-none">
                 <div
                   style={{
-                    backgroundImage: `url(https://backend-saboreequilibrio.onrender.com${item.image})`,
+                    backgroundImage: `url(${import.meta.env.VITE_API_URL}${item.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",

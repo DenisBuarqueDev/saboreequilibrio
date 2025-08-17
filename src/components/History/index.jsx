@@ -4,7 +4,7 @@ import api from "../../api/axios";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-const index = ({ userId }) => {
+const index = ({ id }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -18,18 +18,18 @@ const index = ({ userId }) => {
     } catch (err) {
       setError(err.response?.data?.error);
     } finally {
-      setLoading(false); // sempre finaliza o carregamento
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!userId) {
+    if (!id) {
       setError("ID do usuário não fornecido.");
       setLoading(false);
       return;
     }
     fetchOrders();
-  }, [userId]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -63,7 +63,7 @@ const index = ({ userId }) => {
 
   return (
     <>
-      {error && orders.length === 0 ? (
+      {orders && orders.length === 0 ? (
         <div className="text-center w-full">
           <p className="text-gray-600">{error}</p>
           <button
@@ -75,7 +75,7 @@ const index = ({ userId }) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-4">
-          {orders.map((order) => (
+          {orders && orders.map((order) => (
             <div
               key={order._id}
               className="flex flex-col w-full space-y-1 border p-2 shadow rounded mb-2 bg-white"

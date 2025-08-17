@@ -14,7 +14,7 @@ const index = () => {
           Pedidos
         </h1>
         <div className="w-full">
-          <History userId={user.id} />
+          <History id={user.id} />
         </div>
       </section>
     </main>

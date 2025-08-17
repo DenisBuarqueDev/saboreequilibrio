@@ -120,7 +120,7 @@ const index = () => {
       </div>
     );
   }
-
+  
   return (
     <main className="flex flex-col w-full my-4 p-2">
       <section className="max-w-screen-md flex flex-col mx-auto">
@@ -128,7 +128,7 @@ const index = () => {
 
         {product.image && (
           <img
-            src={`https://backend-saboreequilibrio.onrender.com${product.image}`}
+            src={`${import.meta.env.VITE_API_URL}${product.image}`}
             alt={product.title}
             className="w-full h-auto mb-4 rounded-lg shadow-lg"
           />

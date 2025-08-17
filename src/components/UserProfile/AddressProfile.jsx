@@ -3,7 +3,7 @@ import api from "../../api/axios";
 import { Link } from "react-router-dom";
 import { FaEdit, FaMapMarkerAlt, FaPlus } from "react-icons/fa";
 
-const AddressProfile = ({ userId }) => {
+const AddressProfile = ({ id }) => {
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const AddressProfile = ({ userId }) => {
   const fetchAddresses = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`api/addresses/user/${userId}`);
+      const res = await api.get(`api/addresses/user/${id}`);
       setAddresses(res.data.data || []);
     } catch (err) {
       setError(err.response.data.message);
@@ -23,10 +23,10 @@ const AddressProfile = ({ userId }) => {
 
   // Chama a função ao montar o componente
   useEffect(() => {
-    if (userId) {
+    if (id) {
       fetchAddresses();
     }
-  }, [userId]);
+  }, [id]);
 
   // Renderização condicional
   if (loading) {

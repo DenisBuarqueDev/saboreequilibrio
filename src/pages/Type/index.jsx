@@ -97,7 +97,7 @@ const index = () => {
                 <Link to={`/show/${product._id}`}>
                   <div
                     style={{
-                      backgroundImage: `url(https://backend-saboreequilibrio.onrender.com${product.image})`,
+                      backgroundImage: `url(${import.meta.env.VITE_API_URL}${product.image})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
