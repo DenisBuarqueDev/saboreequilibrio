@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAuthValue } from "../../context/AuthContextProvider";
-//import AddressProfile from "../../components/UserProfile/AddressProfile";
 import { Link } from "react-router-dom";
 import api from "../../api/axios";
 import { MdAddAPhoto, MdNoPhotography } from "react-icons/md";
@@ -9,11 +8,8 @@ import { FaEdit, FaMapMarkerAlt, FaPlus, FaUserCircle } from "react-icons/fa";
 const index = () => {
   const { user } = useAuthValue();
   const [data, setData] = useState(null);
-  const [addresses, setAddresses] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Função busca os dados do usuário
   const fetchUser = async () => {
     try {
       setLoading(true);
@@ -28,23 +24,9 @@ const index = () => {
     }
   };
 
-  // Função para buscar os endereços
-  const fetchAddresses = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get(`api/addresses/user/${user.id}`);
-      setAddresses(res.data.data || []);
-    } catch (err) {
-      setError(err.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (user.id) {
       fetchUser();
-      fetchAddresses();
     }
   }, [user.id]);
 
@@ -65,7 +47,7 @@ const index = () => {
   return (
     <main className="flex flex-col w-full p-4 md:py-4">
       <section className="max-w-screen-md w-full flex flex-col mx-auto">
-        {user && data && (
+        {data && (
           <>
             <div className="flex flex-col items-center justify-center">
               <div className="flex flex-col items-end">
@@ -99,44 +81,8 @@ const index = () => {
         )}
       </section>
       <section className="max-w-screen-md w-full flex flex-col mx-auto">
-        <div className="flex items-center justify-between border-b py-2 mb-1">
-          <h2 className="flex items-center text-md font-medium">
-            <FaMapMarkerAlt className="mr-2" />
-            Endereço
-          </h2>
-          {addresses && addresses.length === 0 && (
-            <Link to="/address/create">
-              <FaPlus />
-            </Link>
-          )}
-        </div>
-
-        {addresses && addresses.length === 0 ? (
-          <div
-            className="p-4 text-sm border border-red-300 text-red-800 rounded-lg bg-red-50 mt-2 dark:bg-gray-800 dark:text-red-400"
-            role="alert"
-          >
-            {error}
-          </div>
-        ) : (
-          <ul>
-            {addresses.map((address, index) => (
-              <li
-                key={index}
-                className="flex items-center justify-between text-sm"
-              >
-                <p>
-                  {address.street}, {address.number}, {address.district},{" "}
-                  {address.zipCode}, {address.city} - {address.state},{" "}
-                  {address.complement}
-                </p>
-                <Link to={`/address/edit/${address._id}`}>
-                  <FaEdit />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        Endereço
+        
       </section>
     </main>
   );
