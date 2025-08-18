@@ -10,12 +10,10 @@ const index = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  console.log(user);
-
   const fetchUser = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`/api/auth/${user.id}`, {
+      const res = await api.get(`api/auth/${user.id}`, {
         withCredentials: true,
       });
       setData(res.data);
