@@ -15,8 +15,6 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
     state: "AL",
   });
 
-  console.log(initialData);
-
   // Preenche os campos quando receber initialData (edição)
   useEffect(() => {
     if (initialData && Object.keys(initialData).length > 0) {
