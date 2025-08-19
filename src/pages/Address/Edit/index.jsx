@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FaSave, FaTrash } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../api/axios";
 import { toast } from "react-toastify";
 import UserForm from "../../../components/UserProfile/UserForm";
 
 const index = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
+
+  const [address, setAddress] = useState({});
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState(null);
 
   useEffect(() => {
     const fetchAddress = async () => {
       try {
         setLoading(true);
-        const response = await api.get(`/api/addresses/${id}`, { withCredentials: true });
+        const response = await api.get(`/api/addresses/${id}`, {
+          withCredentials: true,
+        });
         setAddress(response.data.data);
       } catch (err) {
-        toast.error(err.response?.data?.error);
+        toast.error(err.response.data.error);
       } finally {
         setLoading(false);
       }
@@ -30,10 +31,12 @@ const index = () => {
 
   // Manipula o envio do formulário
   const handleUpdate = async (data) => {
-    setLoading(true);
     try {
+      setLoading(true);
       // Envia a requisição para o endpoint de criação de endereço
-      const response = await api.put(`/api/addresses/${id}`, data);
+      const response = await api.put(`/api/addresses/${id}`, data, {
+        withCredentials: true,
+      });
       toast.success("Endereço atualizado!");
       navigate("/perfil");
     } catch (err) {

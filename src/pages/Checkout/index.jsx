@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthValue } from "../../context/AuthContextProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { SiMercadopago } from "react-icons/si";
-import AddressProfile from "../../components/UserProfile/AddressProfile";
+import { FaEdit, FaMapMarkerAlt, FaPlus } from "react-icons/fa";
 import api from "../../api/axios";
 import { toast } from "react-toastify";
 
@@ -12,10 +12,10 @@ const index = () => {
   const [loading, setLoading] = useState(false);
   const [payment, setPayment] = useState("pix");
   const [address, setAddress] = useState({});
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
   const { user } = useAuthValue();
-  const userId = user.id;
 
   // Carrega o carrinho e calcula o total ao montar
   useEffect(() => {
@@ -35,17 +35,17 @@ const index = () => {
   }, []);
 
   // Busca o endereço do usuário
-  const fetchUserAddresses = async (userId) => {
-    setLoading(true);
+  const fetchUserAddresses = async () => {
     try {
-      const response = await api.get(`/api/addresses/user/${userId}`, {
+      setLoading(true);
+      const res = await api.get(`/api/addresses/user/${user.id}`, {
         withCredentials: true,
       });
-      const userAddress = response.data.data[0];
+      const userAddress = res.data.data[0];
       setAddress(userAddress);
-    } catch (error) {
-      console.error("Erro ao buscar endereço:", error);
-      //toast.error("Não foi possível carregar o endereço do usuário.");
+    } catch (err) {
+      console.error("Erro ao buscar endereço:", err);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -53,14 +53,15 @@ const index = () => {
 
   // Executa a busca do endereço ao obter userId
   useEffect(() => {
-    if (userId) fetchUserAddresses(userId);
-  }, [userId]);
+    if (user.id) {
+      fetchUserAddresses();
+    }
+  }, [user.id]);
 
   const handlePayment = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
+      setLoading(true);
       const orderItems = cart.map((item) => ({
         productId: item.productId,
         title: item.title,
@@ -88,14 +89,9 @@ const index = () => {
       localStorage.removeItem("cart");
       navigate("/orders");
     } catch (err) {
-      const status = err.response?.status;
-      const errorMessage = err.response?.data?.error || "Erro ao criar pedido.";
-      if (status === 401) {
-        toast.warning("Sessão expirada. Faça login novamente.");
-        navigate("/login");
-      } else {
-        console.log("Erro ao criar pedido:", errorMessage);
-      }
+      toast.warning(`Sessão expirada. Erro ${err.response.status}`);
+      console.log("Erro ao criar pedido:", err.response.data.error);
+      navigate("/login");
     } finally {
       setLoading(false);
     }
@@ -145,10 +141,44 @@ const index = () => {
             ))}
         </div>
 
-        <AddressProfile userId={user.id} />
+        <div className="flex items-center justify-between border-b py-2 mb-1">
+          <h2 className="flex items-center text-md font-medium">
+            <FaMapMarkerAlt className="mr-2" />
+            Endereço
+          </h2>
+          {Object.keys(address).length === 0 && (
+            <Link to="/perfil">
+              <FaPlus />
+            </Link>
+          )}
+        </div>
+
+        {error && (
+          <div
+            className="p-4 text-sm border border-red-300 text-red-800 rounded-lg bg-red-50 mt-2 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+          >
+            {error}
+          </div>
+        )}
+
+        {Object.keys(address).length !== 0 && (
+          <ul>
+            <li className="flex items-center justify-between text-sm">
+              <p>
+                {address.street}, {address.number}, {address.district},{" "}
+                {address.zipCode}, {address.city} - {address.state},{" "}
+                {address.complement}
+              </p>
+              <Link to={`/address/edit/${address._id}`}>
+                <FaEdit />
+              </Link>
+            </li>
+          </ul>
+        )}
 
         {amount && (
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center justify-between pt-5">
             <div className="flex flex-col">
               <p className="text-xl font-bold">
                 R$ {amount.toFixed(2).replace(".", ",")}

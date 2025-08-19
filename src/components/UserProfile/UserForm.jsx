@@ -5,7 +5,7 @@ import { FaSave, FaTrash } from "react-icons/fa";
 const UserForm = ({ initialData = {}, onSubmit }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const [form, setForm] = useState({
+  const [data, setData] = useState({
     zipCode: "",
     street: "",
     number: "",
@@ -15,23 +15,25 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
     state: "AL",
   });
 
+  console.log(initialData);
+
   // Preenche os campos quando receber initialData (edição)
   useEffect(() => {
-    if (initialData) {
-      setForm({
+    if (initialData && Object.keys(initialData).length > 0) {
+      setData({
         zipCode: initialData.zipCode || "",
         street: initialData.street || "",
         number: initialData.number || "",
         district: initialData.district || "",
         complement: initialData.complement || "",
-        city: initialData.city || "",
-        state: initialData.state || "",
+        city: initialData.city || "Maceió",
+        state: initialData.state || "AL",
       });
     }
   }, [initialData]);
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   }
 
   const handleCheckboxChange = () => {
@@ -40,7 +42,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(form); // envia para a função passada pelo pai
+    onSubmit(data); // envia para a função passada pelo pai
   }
 
   return (
@@ -54,7 +56,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             CEP
           </label>
           <input
-            value={form.zipCode}
+            value={data.zipCode}
             onChange={handleChange}
             name="zipCode"
             type="text"
@@ -72,7 +74,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             Endereço
           </label>
           <input
-            value={form.street}
+            value={data.street}
             onChange={handleChange}
             name="street"
             type="text"
@@ -93,7 +95,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             Número
           </label>
           <input
-            value={form.number}
+            value={data.number}
             onChange={handleChange}
             name="number"
             type="text"
@@ -111,7 +113,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             Bairro
           </label>
           <input
-            value={form.district}
+            value={data.district}
             onChange={handleChange}
             name="district"
             type="text"
@@ -131,7 +133,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             Complemento
           </label>
           <input
-            value={form.complement}
+            value={data.complement}
             onChange={handleChange}
             name="complement"
             type="text"
@@ -148,7 +150,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             Cidade
           </label>
           <input
-            value={form.city}
+            value={data.city}
             onChange={handleChange}
             name="city"
             type="text"
@@ -165,7 +167,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
             Estado
           </label>
           <input
-            value={form.state}
+            value={data.state}
             onChange={handleChange}
             name="state"
             type="text"
@@ -180,7 +182,7 @@ const UserForm = ({ initialData = {}, onSubmit }) => {
         <input
           id="terms"
           type="checkbox"
-          value={isChecked}
+          checked={isChecked}
           onChange={handleCheckboxChange}
           className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-green-300"
           required
