@@ -38,7 +38,9 @@ const index = () => {
   const fetchUserAddresses = async (userId) => {
     setLoading(true);
     try {
-      const response = await api.get(`api/addresses/user/${userId}`);
+      const response = await api.get(`/api/addresses/user/${userId}`, {
+        withCredentials: true,
+      });
       const userAddress = response.data.data[0];
       setAddress(userAddress);
     } catch (error) {
@@ -121,7 +123,9 @@ const index = () => {
   return (
     <main className="flex flex-col w-full p-4 md:py-4">
       <section className="max-w-screen-md w-full flex flex-col mx-auto">
-        <h1 className="flex items-center text-2xl font-bold text-green-700">Checkout</h1>
+        <h1 className="flex items-center text-2xl font-bold text-green-700">
+          Checkout
+        </h1>
         <div className="flex flex-col w-full border p-3 shadow rounded my-2 bg-white">
           {cart &&
             cart.map((item, index) => (

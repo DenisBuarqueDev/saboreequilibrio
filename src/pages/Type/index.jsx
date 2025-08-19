@@ -14,7 +14,7 @@ const index = () => {
     const fetchProducts = async () => {
       try {
         const res = await api
-          .get(`api/products/category/${id}`)
+          .get(`/api/products/category/${id}`)
           .then((res) => {
             if (res.data.data.length > 0) {
               setProducts(res.data.data);

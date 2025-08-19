@@ -11,17 +11,15 @@ const index = () => {
 
   // Manipula o envio do formulário
   const handleCreate = async (data) => {
-    setError(null);
     try {
       setLoading(true);
-      // Envia a requisição para o endpoint de criação de endereço
-      const response = await api.post("api/addresses", data);
+      const response = await api.post("/api/addresses", data, {
+        withCredentials: true,
+      });
       toast.success("Endereço cadastrado!");
       navigate("/perfil");
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.error || "Erro ao adicionar endereço.";
-      setError(errorMessage);
+      setError(err.response.data.error);
     } finally {
       setLoading(false);
     }
@@ -53,6 +51,8 @@ const index = () => {
           Preencha seus dados corretamente para garantir a entrega do seu pedido
           com eficiência em nossa plataforma.
         </p>
+
+        {error && <p>{error}</p>}
 
         <UserForm onSubmit={handleCreate} />
       </section>

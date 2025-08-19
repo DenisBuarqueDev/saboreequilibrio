@@ -13,7 +13,7 @@ const index = ({ id }) => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await api.get("api/orders/user");
+      const response = await api.get("/api/orders/user");
       setOrders(response.data.data);
     } catch (err) {
       setError(err.response?.data?.error);

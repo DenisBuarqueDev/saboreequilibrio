@@ -13,7 +13,7 @@ const index = () => {
   const fetchUser = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`api/auth/${user.id}`, {
+      const res = await api.get(`/api/auth/${user.id}`, {
         withCredentials: true,
       });
       setData(res.data);

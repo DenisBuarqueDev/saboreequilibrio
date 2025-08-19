@@ -15,7 +15,7 @@ const index = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`api/products/${id}`);
+        const res = await api.get(`/api/products/${id}`);
         setProduct(res.data.data);
       } catch (err) {
         console.error("Erro ao carregar produto:", err);

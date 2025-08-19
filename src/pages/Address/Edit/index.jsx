@@ -16,10 +16,9 @@ const index = () => {
     const fetchAddress = async () => {
       try {
         setLoading(true);
-        const response = await api.get(`api/addresses/${id}`);
+        const response = await api.get(`/api/addresses/${id}`, { withCredentials: true });
         setAddress(response.data.data);
       } catch (err) {
-        //setError(err.response?.data?.error || 'Erro ao buscar endereço');
         toast.error(err.response?.data?.error);
       } finally {
         setLoading(false);
@@ -34,11 +33,11 @@ const index = () => {
     setLoading(true);
     try {
       // Envia a requisição para o endpoint de criação de endereço
-      const response = await api.put(`api/addresses/${id}`, data);
+      const response = await api.put(`/api/addresses/${id}`, data);
       toast.success("Endereço atualizado!");
       navigate("/perfil");
     } catch (err) {
-      toast.error(err.response?.data?.error);
+      toast.error(err.response.data.error);
     } finally {
       setLoading(false);
     }

@@ -4,16 +4,17 @@ import { Link } from "react-router-dom";
 
 const index = () => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
     const fetchCategories = async () => {
+      setLoading(true);
       try {
         if (isMounted) {
-          const res = await api.get("api/categories");
-          setCategories(res.data);
+          const res = await api.get("/api/categories");
+          setCategories(res.data.data);
         }
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);

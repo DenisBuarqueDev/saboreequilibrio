@@ -11,7 +11,7 @@ const index = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`api/products`);
+      const res = await api.get(`/api/products`);
       setProducts(res.data.data);
     } catch (error) {
       console.error("Erro ao buscar products:", error);
@@ -38,7 +38,7 @@ const index = () => {
   const fetchProductsByDescription = async (q) => {
     try {
       const response = await api.get(
-        `api/products/search?q=${encodeURIComponent(q)}`
+        `/api/products/search?q=${encodeURIComponent(q)}`
       );
       setProducts(response.data.data);
     } catch (error) {

@@ -7,13 +7,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 const index = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const res = await api.get(
-          `api/products/category/688b8c6970f5b651e98a6ace`
+          `/api/products/category/688b8c6970f5b651e98a6ace`
         );
         setProducts(res.data.data);
       } catch (error) {
