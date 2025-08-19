@@ -63,7 +63,7 @@ export function AuthProvider({ children }) {
       );
       setUser(res.data.user);
       toast.success(res.data.message);
-      navigate("/");
+      //navigate("/");
     } catch (error) {
       console.error("Erro no login:", error.response?.data || error.message);
       toast.error(error.response?.data?.message);

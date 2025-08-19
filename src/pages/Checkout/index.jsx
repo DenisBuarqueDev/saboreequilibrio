@@ -154,12 +154,12 @@ const index = () => {
         </div>
 
         {error && (
-          <div
+          <Link to="/perfil"
             className="p-4 text-sm border border-red-300 text-red-800 rounded-lg bg-red-50 mt-2 dark:bg-gray-800 dark:text-red-400"
             role="alert"
           >
             {error}
-          </div>
+          </Link>
         )}
 
         {Object.keys(address).length !== 0 && (
