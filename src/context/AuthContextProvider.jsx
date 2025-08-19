@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
     if (!loading && user) {
       getStateUser();
     }
-  }, []);
+  }, [loading, user]);
 
   const register = async (formData) => {
     setLoading(true);

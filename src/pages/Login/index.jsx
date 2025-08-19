@@ -1,16 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrash } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";
 import { useAuthValue } from "../../context/AuthContextProvider";
 
 const index = () => {
-  const { login, loading } = useAuthValue();
+  const { login, loading, user } = useAuthValue();
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [isChecked, setIsChecked] = useState(false);
+
+  // Redireciona apenas depois do carregamento do estado do usuário
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
+
+  // Enquanto está carregando os dados do usuário, mostra feedback
+  if (loadingUser) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <p>Carregando...</p>
+      </main>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
