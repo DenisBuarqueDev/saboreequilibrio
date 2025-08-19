@@ -22,7 +22,7 @@ const index = () => {
   }, [user, loading, navigate]);
 
   // Enquanto está carregando os dados do usuário, mostra feedback
-  if (loadingUser) {
+  if (loading) {
     return (
       <main className="flex justify-center items-center h-screen">
         <p>Carregando...</p>
