@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const isAuthenticated = !!user;
-
+  
   const register = async (formData) => {
     setLoading(true);
     try {
@@ -29,6 +29,18 @@ export function AuthProvider({ children }) {
     } catch (error) {
       //const status = error.response?.status;
       toast.error(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //Verifica usuário logado ao carregar a aplicação
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await api.get("/api/auth/me", { withCredentials: true });
+      setUser(res.data.user); // pega o user do backend
+    } catch (error) {
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -57,35 +69,18 @@ export function AuthProvider({ children }) {
     try {
       setLoading(true);
       await api.post("/api/auth/logout", {}, { withCredentials: true });
+      setUser(null);
       toast.success("Usuário desconectado!");
-      navigate("/");
     } catch (err) {
       toast.error("Erro ao fazer logout.");
-      console.error("Erro ao fazer logout:", err);
-    } finally {
-      setUser(null);
-      setLoading(false);
-    }
-  };
-
-  // pega o estado do usuário logado
-  const getStateUser = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get("/api/auth/me", { withCredentials: true });
-      setUser(res.data.user);
-    } catch {
-      setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!loading && user) {
-      getStateUser();
-    }
-  }, [loading, user]);
+    fetchCurrentUser();
+  }, []);
 
   return (
     <AuthContext.Provider
