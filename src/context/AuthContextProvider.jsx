@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       setLoading(true);
-      await api.post("/api/auth/logout", {}, { withCredentials: true });
+      await api.post("/api/auth/logout", {});
       setUser(null);
       toast.success("Usuário desconectado!");
     } catch (err) {
