@@ -20,11 +20,11 @@ const index = () => {
   };
 
   // Redireciona apenas depois do carregamento do estado do usuário
-  useEffect(() => {
+  /*useEffect(() => {
     if (!loading) {
       navigate("/");
     }
-  }, [loading, navigate]);
+  }, [loading, navigate]);*/
 
   // Enquanto está carregando os dados do usuário, mostra feedback
   if (loading) {
@@ -37,6 +37,7 @@ const index = () => {
 
   const handleLogout = async () => {
     await logout();
+    navigate("/");
   };
 
   return (
