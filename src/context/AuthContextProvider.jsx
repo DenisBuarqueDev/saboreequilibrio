@@ -46,8 +46,8 @@ export function AuthProvider({ children }) {
       toast.success(res.data.message);
       //navigate("/");
     } catch (error) {
-      console.error("Erro no login:", error.response?.data || error.message);
-      toast.error(error.response?.data?.message);
+      console.error("Erro no login:", error.message);
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -88,7 +88,9 @@ export function AuthProvider({ children }) {
   }, [loading, user]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, loading, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, register, loading, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
