@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ToogleMenu from "../../components/ToggleMenu";
 
 import { useAuthValue } from "../../context/AuthContextProvider";
 
 const index = () => {
   const { user, logout } = useAuthValue();
+  const navigate = useNavigate();
 
   const getSaudacao = () => {
     const hora = new Date().getHours();
@@ -19,6 +21,7 @@ const index = () => {
 
   const handleLogout = async () => {
     await logout();
+    navigate("/login");
   };
 
   return (
