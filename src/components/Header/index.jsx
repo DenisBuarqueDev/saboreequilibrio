@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ToogleMenu from "../../components/ToggleMenu";
@@ -6,7 +6,7 @@ import ToogleMenu from "../../components/ToggleMenu";
 import { useAuthValue } from "../../context/AuthContextProvider";
 
 const index = () => {
-  const { user, logout } = useAuthValue();
+  const { user, loading, logout } = useAuthValue();
   const navigate = useNavigate();
 
   const getSaudacao = () => {
@@ -19,9 +19,24 @@ const index = () => {
     }
   };
 
+  // Redireciona apenas depois do carregamento do estado do usuário
+  useEffect(() => {
+    if (!loading) {
+      navigate("/");
+    }
+  }, [loading, navigate]);
+
+  // Enquanto está carregando os dados do usuário, mostra feedback
+  if (loading) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <p>Desconectando...</p>
+      </main>
+    );
+  }
+
   const handleLogout = async () => {
     await logout();
-    navigate("/");
   };
 
   return (
@@ -43,12 +58,10 @@ const index = () => {
 
       <div className="flex items-center justify-between p-2 max-w-screen-xl m-auto">
         {user ? (
-            <p>
-              Bem-vindo(a),{" "}
-              <span className="font-semibold">
-                {user.firstName ?? user.name}
-              </span>
-            </p>
+          <p>
+            Bem-vindo(a),{" "}
+            <span className="font-semibold">{user.firstName ?? user.name}</span>
+          </p>
         ) : (
           <p className="flex items-center">
             <Link to="/login" className="underline mr-1">

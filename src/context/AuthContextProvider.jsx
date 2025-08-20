@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
       setUser(null);
       toast.success(res.response.data.message);
     } catch (err) {
-      toast.error("Erro ao fazer logout.");
+      toast.error(err.response.data.error);
     } finally {
       setLoading(false);
     }
