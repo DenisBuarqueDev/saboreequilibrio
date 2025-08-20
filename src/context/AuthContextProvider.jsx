@@ -12,7 +12,19 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const isAuthenticated = !!user;
-  
+
+  //Verifica usuário logado ao carregar a aplicação
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await api.get("/api/auth/me", { withCredentials: true });
+      setUser(res.data.user); // pega o user do backend
+    } catch (error) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const register = async (formData) => {
     setLoading(true);
     try {
@@ -25,22 +37,9 @@ export function AuthProvider({ children }) {
       });
       setUser(res.data.user);
       toast.success(res.data.message);
-      navigate("/");
     } catch (error) {
       //const status = error.response?.status;
-      toast.error(error.response?.data?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  //Verifica usuário logado ao carregar a aplicação
-  const fetchCurrentUser = async () => {
-    try {
-      const res = await api.get("/api/auth/me", { withCredentials: true });
-      setUser(res.data.user); // pega o user do backend
-    } catch (error) {
-      setUser(null);
+      toast.error(error.response.data.error);
     } finally {
       setLoading(false);
     }
@@ -67,8 +66,9 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       setLoading(true);
-      await api.post("/api/auth/logout", {});
+      const res = await api.post("/api/auth/logout", {}, { withCredentials: true });
       setUser(null);
+      toast.success(res.response.data.message);
     } catch (err) {
       toast.error("Erro ao fazer logout.");
     } finally {

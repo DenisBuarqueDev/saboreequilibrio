@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaSave, FaTrash } from "react-icons/fa";
 import { useAuthValue } from "../../context/AuthContextProvider";
-import { toast } from "react-toastify";
 
 const index = () => {
-  const { register, loading } = useAuthValue();
+
+  const navigate = useNavigate();
+
+  const { register, loading, user } = useAuthValue();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -14,7 +17,6 @@ const index = () => {
     password: "",
     passwordConfirm: "",
   });
-  const [errors, setErrors] = useState({});
 
   const [isChecked, setIsChecked] = useState(false); // Para aceitar termos, se necessário
 
@@ -22,16 +24,28 @@ const index = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Limpa erro do campo ao digitar
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
   };
+
+  // Redireciona apenas depois do carregamento do estado do usuário
+    useEffect(() => {
+      if (!loading && user) {
+        navigate("/");
+      }
+    }, [user, loading, navigate]);
+  
+    // Enquanto está carregando os dados do usuário, mostra feedback
+    if (loading) {
+      return (
+        <main className="flex justify-center items-center h-screen">
+          <p>Carregando...</p>
+        </main>
+      );
+    }
 
   // Manipula envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(formData);
+    const res = await register(formData);
   };
 
   const handleCheckboxChange = () => {
