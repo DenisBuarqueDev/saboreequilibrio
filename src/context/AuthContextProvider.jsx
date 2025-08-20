@@ -13,25 +13,6 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = !!user;
 
-  // pega o estado do usuário logado
-  const getStateUser = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get("/api/auth/me", { withCredentials: true });
-      setUser(res.data.user);
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!loading && user) {
-      getStateUser();
-    }
-  }, [loading, user]);
-
   const register = async (formData) => {
     setLoading(true);
     try {
@@ -86,6 +67,25 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   };
+
+  // pega o estado do usuário logado
+  const getStateUser = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("/api/auth/me", { withCredentials: true });
+      setUser(res.data.user);
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!loading && user) {
+      getStateUser();
+    }
+  }, [loading, user]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout, register, loading, isAuthenticated }}>
