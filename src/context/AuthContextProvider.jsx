@@ -56,7 +56,6 @@ export function AuthProvider({ children }) {
       );
       setUser(res.data.user);
       toast.success(res.data.message);
-      //navigate("/");
     } catch (error) {
       console.error("Erro no login:", error.message);
       toast.error(error.response.data.message);
@@ -70,7 +69,6 @@ export function AuthProvider({ children }) {
       setLoading(true);
       await api.post("/api/auth/logout", {});
       setUser(null);
-      toast.success("Usuário desconectado!");
     } catch (err) {
       toast.error("Erro ao fazer logout.");
     } finally {
