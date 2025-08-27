@@ -120,7 +120,7 @@ const index = () => {
                 <Link to={`/show/${product._id}`}>
                   <div
                     style={{
-                      backgroundImage: `url(${import.meta.env.VITE_API_URL}${product.image})`,
+                      backgroundImage: `url(${product.image})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",

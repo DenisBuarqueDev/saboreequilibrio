@@ -124,7 +124,7 @@ const index = () => {
                     <div
                       className="sm:flex-1"
                       style={{
-                        backgroundImage: `url(${import.meta.env.VITE_API_URL}${product.image})`,
+                        backgroundImage: `url(${product.image})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",

@@ -19,13 +19,6 @@ const index = () => {
     }
   };
 
-  // Redireciona apenas depois do carregamento do estado do usuário
-  /*useEffect(() => {
-    if (!loading) {
-      navigate("/");
-    }
-  }, [loading, navigate]);*/
-
   // Enquanto está carregando os dados do usuário, mostra feedback
   if (loading) {
     return (

@@ -128,7 +128,7 @@ const index = () => {
 
         {product.image && (
           <img
-            src={`${import.meta.env.VITE_API_URL}${product.image}`}
+            src={`${product.image}`}
             alt={product.title}
             className="w-full h-auto mb-4 rounded-lg shadow-lg"
           />

@@ -49,7 +49,7 @@ const index = () => {
     return (
       <div
         role="status"
-        className="max-w-screen-md w-full m-auto animate-pulse"
+        className="max-w-screen-md w-full m-auto p-4 animate-pulse"
       >
         <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
         <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
@@ -72,7 +72,7 @@ const index = () => {
                 {data.image ? (
                   <img
                     className="w-32 h-32 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                    src={`${import.meta.env.VITE_API_URL}${data.image}`}
+                    src={`${data.image}`}
                     alt="Foto"
                   />
                 ) : (
