@@ -83,7 +83,7 @@ const index = () => {
     return (
       <div
         role="status"
-        className="max-w-sm m-auto p-4 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700"
+        className="max-w-sm m-auto p-4 m-3 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700"
       >
         <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded-sm dark:bg-gray-700">
           <svg
@@ -123,7 +123,7 @@ const index = () => {
   
   return (
     <main className="flex flex-col w-full my-4 p-2">
-      <section className="max-w-screen-md flex flex-col mx-auto">
+      <section className="max-w-screen-md p-2 flex flex-col mx-auto">
         {!product && <p className="text-center py-3 text-green-700">Produto não encontrado</p>}
 
         {product.image && (
@@ -134,14 +134,14 @@ const index = () => {
           />
         )}
         <h1 className="text-3xl font-bold text-green-700">{product.title}</h1>
-        <p className="text-xl text-gray-500">{product.subtitle}</p>
-        <p className="text-md my-3 text-gray-500">{product.description}</p>
+        <p className="text-sm text-gray-500">{product.subtitle}</p>
+        <p className="text-xl my-3 text-gray-500 font-semibold">{product.description}</p>
         <p className="text-md font-semibold text-xl">
           R$ {product.price.toFixed(2).replace(".", ",")}
         </p>
         <p className="text-md">Categoria: {product.categoryId?.title}</p>
 
-        <div className="w-full flex justify-between mx-auto border-t pt-5 mt-5">
+        <div className="w-full flex justify-between mx-auto pt-5 mt-5">
           <div className="flex items-center">
             <button
               onClick={decrement}

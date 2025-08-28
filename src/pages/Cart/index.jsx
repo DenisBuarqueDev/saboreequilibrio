@@ -76,7 +76,7 @@ const index = () => {
     <main className="flex flex-col w-full p-4 md:py-4">
       <section className="max-w-screen-md w-full flex flex-col mx-auto">
         <h1 className="flex items-center text-2xl text-green-700 font-bold mb-4">
-          Cart Shopp
+          Carrinho
         </h1>
 
         {cart &&
@@ -99,7 +99,7 @@ const index = () => {
               </div>
               <div className="flex flex-col justify-between flex-1 p-3">
                 <Link
-                  to={`/show/${item._id}`}
+                  to={`/show/${item.productId}`}
                   className="text-lg font-semibold mb-2 hover:underline"
                 >
                   {item.title}

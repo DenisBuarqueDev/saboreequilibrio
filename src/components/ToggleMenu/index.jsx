@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineMenu } from "react-icons/md";
 import { FaArrowRightToBracket } from "react-icons/fa6";
 import { ImExit } from "react-icons/im";
+import { FaCartPlus, FaConciergeBell } from "react-icons/fa";
 
 const index = ({ user, handleLogout }) => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const index = ({ user, handleLogout }) => {
 
   return (
     <>
-      <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <div className="flex md:order-2 space-x-2 md:space-x-0 rtl:space-x-reverse">
         {!user && (
           <Link
             to="/login"
@@ -34,6 +35,20 @@ const index = ({ user, handleLogout }) => {
           >
             <ImExit />
           </button>
+        )}
+        <Link
+          to="/cart"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        >
+          <FaCartPlus />
+        </Link>
+        {user && (
+          <Link
+            to="/orders"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          >
+            <FaConciergeBell />
+          </Link>
         )}
         <button
           onClick={toggleMenu}
