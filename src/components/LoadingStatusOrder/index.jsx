@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api/axios";
+import { toast } from "react-toastify";
 
 const index = ({ orderId }) => {
   const [status, setStatus] = useState("");
@@ -16,6 +17,12 @@ const index = ({ orderId }) => {
           setStatus(newStatus);
           setLastStatus(newStatus);
         }
+
+        // Exemplo: alerta quando mudar
+          if (lastStatus) {
+            toast.success(`Status atualizado: ${newStatus}`);
+          }
+
       } catch (err) {
         console.error("Erro ao buscar status:", err);
       }
