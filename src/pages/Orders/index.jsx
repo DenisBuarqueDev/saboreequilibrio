@@ -113,11 +113,11 @@ const index = () => {
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        
-                          <LoadingStatusOrder orderId={order._id} />
-                          {/*order.status.charAt(0).toUpperCase() +
-                            order.status.slice(1) */}
-                        
+                        <span className="text-[12px] bg-orange-600  px-2 py-1 text-white rounded-full mr-2">
+                          {order.status.charAt(0).toUpperCase() +
+                            order.status.slice(1)}
+                        </span>
+
                         <span className="text-sm">
                           {new Date(order.createdAt).toLocaleString("pt-BR", {
                             day: "2-digit",
