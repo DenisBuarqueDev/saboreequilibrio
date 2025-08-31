@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
-import History from "../../components/LoadingStatusOrder";
 import { useAuthValue } from "../../context/AuthContextProvider";
-import LoadingStatusOrder from "../../components/LoadingStatusOrder";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { FaMotorcycle } from "react-icons/fa";
+import { io } from "socket.io-client";
+
+/*const socket = io("http://localhost:5000", {
+  transports: ["websocket"], // força usar WebSocket
+});*/
+
+const socket = io("https://backend-saboreequilibrio.onrender.com", {
+  transports: ["websocket"], // força usar WebSocket
+});
 
 const index = () => {
   const { user } = useAuthValue();
@@ -14,6 +21,7 @@ const index = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
 
   const fetchOrders = async () => {
     try {
@@ -35,6 +43,22 @@ const index = () => {
     }
     fetchOrders();
   }, [user.id]);
+
+  // Novos pedidos em tempo real
+  useEffect(() => {
+    socket.on("orderStatusUpdated", (updatedOrder) => {
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === updatedOrder._id ? updatedOrder : order
+        )
+      );
+    });
+
+    return () => {
+      socket.off("orderStatusUpdated");
+    };
+  }, []);
+
 
   if (loading) {
     return (
