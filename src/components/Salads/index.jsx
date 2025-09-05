@@ -72,7 +72,7 @@ const index = () => {
           </div>
         </form>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-8">
         {products &&
           products.map((product) => (
             <div
@@ -104,7 +104,7 @@ const index = () => {
                     </h5>
                   </Link>
                   <p className="font-normal text-gray-700 text-sm leading-normal">
-                    {product.subtitle}
+                    {product.description}
                   </p>
                 </div>
               </div>
