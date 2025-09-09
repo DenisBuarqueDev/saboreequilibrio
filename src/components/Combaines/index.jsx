@@ -14,7 +14,7 @@ const index = () => {
       try {
         setLoading(true);
         const res = await api.get(
-          `/api/products/category/688b8c6970f5b651e98a6ace`
+          `/api/products/category/688ca3e9f3d8c33259c7a7f0`
         );
         setProducts(res.data.data);
       } catch (error) {

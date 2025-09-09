@@ -54,9 +54,11 @@ const index = () => {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-8">
+        <h1 className="mb-4 px-3 text-4xl font-extrabold text-green-700 tracking-tight leading-none md:text-5xl dark:text-white">
+          7 dias de salada, rotina saudável com desconto.
+        </h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">
-          Oferecemos opções práticas e nutritivas, feitas com ingredientes
-          selecionados para cuidar do seu corpo e da sua mente.
+          Escolha 7 saladas diferentes, receba uma por dia e ganhe 20% de desconto no pacote semanal.
         </p>
         <form className="w-full max-w-md mx-auto">
           <div className="">
