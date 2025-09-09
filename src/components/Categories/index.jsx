@@ -47,13 +47,18 @@ const index = () => {
 
   return (
     <section className="bg-white dark:bg-gray-900">
-      <div className="py-4 mx-auto w-full text-center lg:py-8">
+      <div className="py-2 mx-auto w-full text-center lg:py-2">
+        <Link to="/nutrition" class="inline-flex justify-between items-center py-1 px-1 pe-4 mb-2 text-sm text-green-700 bg-blue-100 rounded-full dark:bg-green-900 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800">
+            <span class="text-xs bg-green-600 rounded-full text-white px-4 py-1.5 me-3">Recomendações</span> <span class="text-sm font-medium">Nutricionista Digital</span> 
+            <svg class="w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+        </Link>
         <h1 className="mb-4 px-3 text-4xl font-extrabold text-green-700 tracking-tight leading-none md:text-5xl dark:text-white">
           Alimente-se bem, todos os dias.
         </h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
-          Saladas feitas na hora, acomapnhas de diversos tipos de carnes,
-          descubra como é simples transformar sua alimentação em prazer.
+          Saladas feitas na hora, acomapnhas de diversos tipos de carnes.
         </p>
         <div className="w-full flex flex-wrap items-center justify-center">
           {categories &&

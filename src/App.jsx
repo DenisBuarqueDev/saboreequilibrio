@@ -20,6 +20,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Nutrition from "./pages/Nutrition";
 import NotFound from "./pages/NotFound";
 
 import Header from "./components/Header";
@@ -89,6 +90,7 @@ function App() {
         <Route path="/type/:id" element={<Type />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/nutrition" element={<Nutrition />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideLayout && <Footer />}
