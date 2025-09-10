@@ -61,6 +61,7 @@ const index = () => {
       const newItem = {
         productId: product._id,
         title: product.title,
+        description: product.description,
         price: product.price,
         subtotal: quantity * product.price,
         qtd: quantity,

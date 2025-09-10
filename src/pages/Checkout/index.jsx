@@ -65,6 +65,7 @@ const index = () => {
       const orderItems = cart.map((item) => ({
         productId: item.productId,
         title: item.title,
+        description: item.description,
         price: item.price,
         subtotal: item.subtotal,
         qtd: item.qtd,
