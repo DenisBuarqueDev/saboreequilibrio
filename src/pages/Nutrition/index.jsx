@@ -19,8 +19,7 @@ const index = () => {
     setLoading(true);
 
     try {
-      setLoading(true);
-      const res = await api.post(`/api/nutrition`, { formData });
+      const res = await api.post(`/api/nutrition`, formData);
       setRecommendation(res.data.recommendation);
     } catch (err) {
       console.error("Erro ao carregar recomendação:", err);
@@ -35,7 +34,18 @@ const index = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  if (loading) <p>Carregando...</p>;
+  if (loading)
+    return (
+      <div role="status" class="max-w-sm animate-pulse m-auto p-4 w-full">
+        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+        <span class="sr-only">Loading...</span>
+      </div>
+    );
 
   return (
     <main className="flex flex-col w-full my-4 p-2">
@@ -47,7 +57,7 @@ const index = () => {
           <span className="text-xs bg-green-600 rounded-full text-white px-4 py-1.5 me-3">
             Recomendações
           </span>{" "}
-          <span class="text-sm font-medium">Nutricionista Digital</span>
+          <span className="text-sm font-medium">Nutricionista Digital</span>
           <svg
             className="w-2.5 h-2.5 ms-2 rtl:rotate-180"
             aria-hidden="true"
@@ -74,7 +84,7 @@ const index = () => {
       </div>
 
       <div className="mb-4 px-3 text-center">
-        {recommendation && <p>recommendation</p>}
+        {recommendation && <p>{recommendation.replace(/\*/g, "")}</p>}
       </div>
 
       <div className="w-full max-w-sm mx-auto">
@@ -98,7 +108,7 @@ const index = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
               placeholder="Ex: 35"
               required
-              maxLength={3}
+              maxLength={2}
             />
           </div>
           <div className="">
@@ -111,7 +121,7 @@ const index = () => {
             <input
               value={formData.weight}
               onChange={handleChange}
-              type="number"
+              type="text"
               id="weight"
               name="weight"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
@@ -130,7 +140,7 @@ const index = () => {
             <input
               value={formData.height}
               onChange={handleChange}
-              type="number"
+              type="text"
               id="height"
               name="height"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-bgreenlue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
