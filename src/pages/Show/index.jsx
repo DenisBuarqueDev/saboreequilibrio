@@ -136,7 +136,7 @@ const index = () => {
         )}
         <h1 className="text-3xl font-bold text-green-700">{product.title}</h1>
         <p className="text-sm text-gray-500">{product.subtitle}</p>
-        <p className="text-xl my-3 text-gray-500 font-semibold">{product.description}</p>
+        <p className="text-xl my-3 text-gray-500">{product.description}</p>
         <p className="text-md font-semibold text-xl">
           R$ {product.price.toFixed(2).replace(".", ",")}
         </p>

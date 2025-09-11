@@ -111,7 +111,7 @@ const index = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col text-orange-600 font-bold sm:flex-row sm:justify-between px-2 pb-2 text-left">
+              <div className="flex justify-between text-orange-600 font-bold sm:flex-row px-2 pb-2 text-left">
                 <h3>R$ {product.price.toFixed(2).replace(".", ",")}</h3>
 
                 <div className="flex items-center space-x-1 rtl:space-x-reverse">

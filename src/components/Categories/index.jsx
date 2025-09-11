@@ -46,11 +46,11 @@ const index = () => {
   }
 
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section className="bg-white dark:bg-gray-900 mb-10">
       <div className="py-2 mx-auto w-full text-center lg:py-2">
-        <Link to="/nutrition" class="inline-flex justify-between items-center py-1 px-1 pe-4 mb-2 text-sm text-green-700 bg-blue-100 rounded-full dark:bg-green-900 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800">
-            <span class="text-xs bg-green-600 rounded-full text-white px-4 py-1.5 me-3">Recomendações</span> <span class="text-sm font-medium">Nutricionista Digital</span> 
-            <svg class="w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <Link to="/nutrition" className="inline-flex justify-between items-center py-1 px-1 pe-4 mb-2 text-sm text-green-700 bg-blue-100 rounded-full dark:bg-green-900 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800">
+            <span className="text-xs bg-green-600 rounded-full text-white px-4 py-1.5 me-3">Recomendações</span> <span className="text-sm font-medium">Nutricionista Digital</span> 
+            <svg className="w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
         </Link>
