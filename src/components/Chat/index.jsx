@@ -14,7 +14,7 @@ const index = ({ orderId, userId }) => {
     // Entrar na sala do pedido
     socket.emit("joinOrder", orderId);
 
-    // Buscar mensagens iniciais
+    // buscar mensagens iniciais...
     const fetchMessages = async () => {
       const res = await api.get(`/api/chat/${orderId}`);
       setMessages(res.data);
